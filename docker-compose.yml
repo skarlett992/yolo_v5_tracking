@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  stage:
+    image: yolo_v5_test_project
+    build:
+      context: .
+      target: yolo_v5_test_project
+      dockerfile: Dockerfile
+    volumes:
+      - ./deep_sort:/app/deep_sort
+      - ./src:/app/src
+      - ./torchreid:/app/torchreid
+      - ./yolov5:/app/yolov5
+      - ./yolov:/app/yolov
+      - ./track.py:/app/track.py
+      - ./weights:/app/weights
+      - ./Peoples.mp4:/app/Peoples.mp4
+      - /dev:/dev
+    command:
+      python track.py --source Peoples.mp4 --yolo_model weights/crowdhuman_yolov5m.pt --show-vid --save-vid --project inference/output
+      # tail -f /dev/null
